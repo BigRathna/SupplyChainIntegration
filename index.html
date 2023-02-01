@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Supply Chain Interface</title>
+    <meta charset="utf-8" />
+    <style>
+    </style>
+</head>
+
+<body>
+    <h1>Supply Chain Manager</h1>
+
+    <form>
+        <h2>Create Batch</h2>
+        <input type="text" name="batchId" placeholder="Batch ID" />
+        <input class="btn" type="button" value="Create" onclick="createBatch()">
+        <!-- <button type="button" onclick="createBatch()">Create</button> -->
+    </form>
+
+    <form>
+        <h2>Add Batch Info</h2>
+        <input type="text" name="batchId2" placeholder="Batch ID" />
+        <input type="text" name="harvestDate" placeholder="Harvest Date" />
+        <input type="text" name="location" placeholder="Location" />
+        <button type="button" onclick="addBatchInfo()">Add</button>
+    </form>
+
+    <form>
+        <h2>Update Harvest Date</h2>
+        <input type="text" name="batchId3" placeholder="Batch ID" />
+        <input type="text" name="newHarvestDate" placeholder="New Harvest Date" />
+        <button type="button" onclick="updateHarvestDate()">Update</button>
+    </form>
+
+    <form>
+        <h2>Update Transportation Info</h2>
+        <input type="text" name="batchId4" placeholder="Batch ID" />
+        <input type="text" name="carrier" placeholder="Carrier" />
+        <input type="text" name="route" placeholder="Route" />
+        <button type="button" onclick="updateTransportationInfo()">Update</button>
+    </form>
+
+    <form>
+        <h2>Update Batch Status</h2>
+        <input type="text" name="batchId5" placeholder="Batch ID" />
+        <input type="text" name="currentStatus" placeholder="Current Status" />
+        <button type="button" onclick="updateBatchStatus()">Update</button>
+    </form>
+
+    <form>
+        <h2>Transfer Ownership</h2>
+        <input type="text" name="batchId6" placeholder="Batch ID" />
+        <input type="text" name="newOwner" placeholder="New Owner Address" />
+        <button type="button" onclick="transferOwnership()">Transfer</button>
+    </form>
+    <form>
+        <h2>Batch History</h2>
+        <input type="text" name="batchId7" placeholder="Batch ID" />
+        <button type="button" onclick="getBatchHistory()">History</button>
+        <table id="batchHistory">
+            <tr>
+                <th>Event Type</th>
+                <th>Timestamp</th>
+                <th>Event Data</th>
+            </tr>
+        </table>
+    </form>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script>
+        // Set up web3
+        const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+
+
+        // Set up the Contract contract
+        var ContractABI = [
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_batchID",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_harvestDate",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_location",
+                        "type": "string"
+                    }
+                ],
+                "name": "addBatchInfo",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_batchID",
+                        "type": "string"
+                    }
+                ],
+                "name": "createBatch",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_batchID",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "_newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "transferOwnership",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_batchID",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_currentStatus",
+                        "type": "string"
+                    }
+                ],
+                "name": "updateBatchStatus",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_batchID",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_newHarvestDate",
+                        "type": "string"
+                    }
+                ],
+                "name": "updateHarvestDate",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_batchID",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_carrier",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_route",
+                        "type": "string"
+                    }
+                ],
+                "name": "updateTransportationInfo",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "name": "batches",
+                "outputs": [
+                    {
+                        "internalType": "address",
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "batchID",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "harvestDate",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "location",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "processor",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "packagingDate",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "isProcessed",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "batchHistory",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "eventType",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "timestamp",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "eventData",
+                        "type": "string"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_batchID",
+                        "type": "string"
+                    }
+                ],
+                "name": "getBatchHistory",
+                "outputs": [
+                    {
+                        "components": [
+                            {
+                                "internalType": "string",
+                                "name": "eventType",
+                                "type": "string"
+                            },
+                            {
+                                "internalType": "uint256",
+                                "name": "timestamp",
+                                "type": "uint256"
+                            },
+                            {
+                                "internalType": "string",
+                                "name": "eventData",
+                                "type": "string"
+                            }
+                        ],
+                        "internalType": "struct SupplyChain.SupplyChainEvent[]",
+                        "name": "",
+                        "type": "tuple[]"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "bytes",
+                        "name": "data",
+                        "type": "bytes"
+                    }
+                ],
+                "name": "toString",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "stateMutability": "pure",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_batchID",
+                        "type": "string"
+                    }
+                ],
+                "name": "verifyCompliance",
+                "outputs": [
+                    {
+                        "internalType": "bool",
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+        var ContractAddress = "0x16949E78d3eBd5530016D1E412990ecA1e9d5Af1";
+
+
+        var contract = new web3.eth.Contract(ContractABI, ContractAddress);
+
+
+        // Functions for interacting with the Contract contract
+        async function createBatch() {
+            ethereum.enable().then(accounts => {
+                const account = accounts[0];
+            });
+
+            var batchId = document.querySelector('input[name="batchId"]').value;
+            const accounts = await web3.eth.getAccounts();
+            contract.methods.createBatch(batchId).send({ from: accounts[0] });
+        }
+
+        async function addBatchInfo() {
+            ethereum.enable().then(accounts => {
+                const account = accounts[0];
+            });
+            var batchId = document.querySelector('input[name="batchId2"]').value;
+            var harvestDate = document.querySelector('input[name="harvestDate"]').value;
+            var location = document.querySelector('input[name="location"]').value;
+            const accounts = await web3.eth.getAccounts();
+            contract.methods.addBatchInfo(batchId, harvestDate, location).send({ from: accounts[0] });
+        }
+
+        async function updateHarvestDate() {
+            ethereum.enable().then(accounts => {
+                const account = accounts[0];
+            });
+            var batchId = document.querySelector('input[name="batchId3"]').value;
+            var newHarvestDate = document.querySelector('input[name="newHarvestDate"]').value;
+            const accounts = await web3.eth.getAccounts();
+            contract.methods.updateHarvestDate(batchId, newHarvestDate).send({ from: accounts[0] });
+        }
+
+        async function updateTransportationInfo() {
+            var batchId = document.querySelector('input[name="batchId4"]').value;
+            var carrier = document.querySelector('input[name="carrier"]').value;
+            var route = document.querySelector('input[name="route"]').value;
+            const accounts = await web3.eth.getAccounts();
+            contract.methods.updateTransportationInfo(batchId, carrier, route).send({ from: accounts[0] });
+        }
+
+        async function updateBatchStatus() {
+            var batchId = document.querySelector('input[name="batchId5"]').value;
+            var currentStatus = document.querySelector('input[name="currentStatus"]').value;
+            const accounts = await web3.eth.getAccounts();
+            contract.methods.updateBatchStatus(batchId, currentStatus).send({ from: accounts[0] });
+        }
+
+        async function transferOwnership() {
+            var batchId = document.querySelector('input[name="batchId6"]').value;
+            var newOwner = document.querySelector('input[name="newOwner"]').value;
+            const accounts = await web3.eth.getAccounts();
+            contract.methods.transferOwnership(batchId, newOwner).send({ from: accounts[0] });
+        }
+
+        // Function for getting the batch history
+        async function getBatchHistory() {
+            ethereum.enable().then(accounts => {
+                const account = accounts[0];
+            });
+            var batchId = document.getElementById("batchId7").value;
+            const accounts = await web3.eth.getAccounts();
+            var history = contract.methods.getBatchHistory(batchId).call();
+
+
+            // Clear the table
+            var table = document.getElementById("batchHistory");
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+
+            // Populate the table
+            for (var i = 0; i < history.length; i++) {
+                var row = table.insertRow(-1);
+                var eventTypeCell = row.insertCell(0);
+                var timestampCell = row.insertCell(1);
+                var eventDataCell = row.insertCell(2);
+                eventTypeCell.innerHTML = history[i].eventType;
+                timestampCell.innerHTML = history[i].timestamp;
+                eventDataCell.innerHTML = history[i].eventData;
+            }
+        }
+    </script>
+</body>
+
+</html>
