@@ -1,0 +1,66 @@
+h1 {
+    color: white;
+    font-size: 40px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+  }
+
+body {
+    background: radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90.2%);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+
+h2 {
+    color: white;
+    font-size: 20px;
+    padding-left: 20px;
+  }
+
+button , .btn{
+    background-color: #6509ce;
+    border: 0e1015;
+    text-align: center;
+    text-decoration: none;
+    padding: 8px 25px;
+    width: 100px;
+    font-size: 15px;
+    color: #e3e3e3;
+}
+
+button:hover, .btn:hover{
+    background-color: #5206a8;
+}
+
+.inp1 , .inp14{
+    padding: 7px 18px;
+    width: 900px;
+    background-color: #ffffff;
+    border: #0e1015;
+    border-style: solid;
+    border-width: 0.1px;
+    text-align: center;
+}
+
+.inp2 , .inp3, .inp4 , .inp7, .inp8, .inp9{
+    padding: 7px 18px;
+    width: 272px;
+    background-color: #ffffff;
+    border: #0e1015;
+    border-style: solid;
+    border-width: 0.1px;
+    text-align: center;
+}
+
+.inp5, .inp6, .inp10, .inp11, .inp12, .inp13 {
+    width: 430px;
+    padding: 7px 18px;
+    background-color: #ffffff;
+    border: #0e1015;
+    border-style: solid;
+    border-width: 0.1px;
+    text-align: center;
+}
+
+#batchHistory {
+    color: white;
+}

@@ -4,8 +4,7 @@
 <head>
     <title>Supply Chain Interface</title>
     <meta charset="utf-8" />
-    <style>
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -13,50 +12,50 @@
 
     <form>
         <h2>Create Batch</h2>
-        <input type="text" name="batchId" placeholder="Batch ID" />
+        <input class="inp1" type="text" name="batchId" placeholder="Batch ID" />
         <input class="btn" type="button" value="Create" onclick="createBatch()">
         <!-- <button type="button" onclick="createBatch()">Create</button> -->
     </form>
 
     <form>
         <h2>Add Batch Info</h2>
-        <input type="text" name="batchId2" placeholder="Batch ID" />
-        <input type="text" name="harvestDate" placeholder="Harvest Date" />
-        <input type="text" name="location" placeholder="Location" />
+        <input class="inp2" type="text" name="batchId2" placeholder="Batch ID" />
+        <input class="inp3" type="text" name="harvestDate" placeholder="Harvest Date" />
+        <input class="inp4" type="text" name="location" placeholder="Location" />
         <button type="button" onclick="addBatchInfo()">Add</button>
     </form>
 
     <form>
         <h2>Update Harvest Date</h2>
-        <input type="text" name="batchId3" placeholder="Batch ID" />
-        <input type="text" name="newHarvestDate" placeholder="New Harvest Date" />
+        <input class="inp5" type="text" name="batchId3" placeholder="Batch ID" />
+        <input class="inp6" type="text" name="newHarvestDate" placeholder="New Harvest Date" />
         <button type="button" onclick="updateHarvestDate()">Update</button>
     </form>
 
     <form>
         <h2>Update Transportation Info</h2>
-        <input type="text" name="batchId4" placeholder="Batch ID" />
-        <input type="text" name="carrier" placeholder="Carrier" />
-        <input type="text" name="route" placeholder="Route" />
+        <input class="inp7" type="text" name="batchId4" placeholder="Batch ID" />
+        <input class="inp8" type="text" name="carrier" placeholder="Carrier" />
+        <input class="inp9" type="text" name="route" placeholder="Route" />
         <button type="button" onclick="updateTransportationInfo()">Update</button>
     </form>
 
     <form>
         <h2>Update Batch Status</h2>
-        <input type="text" name="batchId5" placeholder="Batch ID" />
-        <input type="text" name="currentStatus" placeholder="Current Status" />
+        <input class="inp10" type="text" name="batchId5" placeholder="Batch ID" />
+        <input class="inp11" type="text" name="currentStatus" placeholder="Current Status" />
         <button type="button" onclick="updateBatchStatus()">Update</button>
     </form>
 
     <form>
         <h2>Transfer Ownership</h2>
-        <input type="text" name="batchId6" placeholder="Batch ID" />
-        <input type="text" name="newOwner" placeholder="New Owner Address" />
+        <input class="inp12" type="text" name="batchId6" placeholder="Batch ID" />
+        <input class="inp13" type="text" name="newOwner" placeholder="New Owner Address" />
         <button type="button" onclick="transferOwnership()">Transfer</button>
     </form>
     <form>
         <h2>Batch History</h2>
-        <input type="text" name="batchId7" placeholder="Batch ID" />
+        <input class="inp14" type="text" name="batchId7" placeholder="Batch ID" />
         <button type="button" onclick="getBatchHistory()">History</button>
         <table id="batchHistory">
             <tr>
