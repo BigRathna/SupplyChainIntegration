@@ -61,12 +61,12 @@
         <input class="inp9" type="text" name="signature" placeholder="Signature" />
         <button type="button" onclick="addIoTData()">Add IoT</button><br><br>
         <input class="inp7" type="text" name="batchId7_2" placeholder="Batch ID" />
-        <input class="inp9" id="file" type="file" name="iotFile" multiple />
+        <input id="file" type="file" name="iotFile" multiple />
         <input class="inp9" type="text" name="signature_2" placeholder="Signature" />
         <button type="submit" id="submit-btn">Load Files</button>
     </form>
     <form>
-        <h2>Retrieve IoT data</h2>
+        <h2>Reterieve IoT data</h2>
         <input class="inp12" type="text" name="batchId8" placeholder="Batch ID" />
         <input class="inp13" type="text" name="signatureProof" placeholder="Signature" />
         <button type="button" onclick="getIoTData()">Receive IoT</button><br>
@@ -77,7 +77,7 @@
         <h2>Batch History</h2>
         <input class="inp14" type="text" name="batchId9" placeholder="Batch ID" />
         <button type="button" onclick="getBatchHistoryCall()">History</button><br>
-        <textarea class="btchis" color="red" id="batchHistory" name="batchHistory" rows="15" cols="120">
+        <textarea color="red" id="batchHistory" name="batchHistory" rows="15" cols="120">
         </textarea>
     </form>
     <forrm>
@@ -93,7 +93,7 @@
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <script>
         // Set up web3
-        const web3 = new Web3(Web3.givenProvider || "http://localhost:7545"); // 
+        const web3 = new Web3("http://localhost:7545" || Web3.givenProvider); // 
 
 
         // Set up the Contract contract
@@ -390,7 +390,7 @@
                 "type": "function"
             }
         ]
-        var ContractAddress = "0xA369eF12610ca3f768213114B4DC9152B3C65372";
+        var ContractAddress = "0x3f6e2bf80453A1FA8E039004429c1c5416cBc94C";
 
 
         var contract = new web3.eth.Contract(ContractABI, ContractAddress);
