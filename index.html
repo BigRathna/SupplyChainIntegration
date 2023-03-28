@@ -446,7 +446,7 @@
                 "type": "function"
             }
         ]
-        var ContractAddress = "0x7aC82B21A8698E963e48a314520C31e7ca1BEfE7";
+        var ContractAddress = "0xe358EDE41b8e03C526BFC4A9398CEdF043b877F0";
 
 
         var contract = new web3.eth.Contract(ContractABI, ContractAddress);
@@ -565,6 +565,7 @@
             try {
                 var info = await contract.methods.getBatchHistory(batchId).call({ from: account });
                 if (info) {
+                    info = formatData(info);
                     document.getElementById("batchHistory").innerHTML = info;
                 } else {
                     document.getElementById("batchHistory").innerHTML = "No history found for this batch";
@@ -581,8 +582,37 @@
             const batchId = document.querySelector('input[name="batchId10"]').value;
             const accounts = await ethereum.enable();
             const account = accounts[0];
-            const info = await contract.methods.getBatchContents(batchId).call({ from: account });
+            info = await contract.methods.getBatchContents(batchId).call({ from: account });
+            info = replaceAllWithRegex(info, ' || ', '\n');
             textArea.value = info;
+        }
+
+        function formatData(data) {
+            // Split the data string into an array of individual timestamp and string pairs
+            const timestampPairs = data.split(' ||-> ');
+
+            // Map over the array of timestamp pairs and format the timestamps while preserving the strings
+            const formattedPairs = timestampPairs.map(pair => {
+                // Split each pair into timestamp and string parts
+                const [str, timestamp] = pair.split(' ->');
+
+                // Format the timestamp in IST format
+                const unixTimestamp = parseInt(timestamp);
+                const date = new Date(unixTimestamp * 1000 + 19800000); // Add 5.5 hours (in milliseconds) for IST
+                const formattedDate = date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+                // Join the formatted timestamp and string parts back together with the -> separator
+                return formattedDate + ' -> ' + str;
+            });
+
+            // Combine the formatted timestamp and string pairs into a single formatted string with new line separators
+            const formattedString = formattedPairs.join('\n');
+
+            return formattedString;
+        }
+
+        function replaceAllWithRegex(data, find, replace) {
+            return data.replace(/\|\|/g, '\n');
         }
 
 

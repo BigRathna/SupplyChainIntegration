@@ -35,7 +35,7 @@ contract SupplyChain {
             batchStatus: "Created",
             batchHistory: string(
                 abi.encodePacked(
-                    "Batch created on ",
+                    "||->Batch created on ->",
                     Strings.toString(block.timestamp)
                 )
             )
@@ -113,9 +113,10 @@ contract SupplyChain {
         );
     }
 
-    function transferOwnership(string memory _batchID, address _newOwner)
-        public
-    {
+    function transferOwnership(
+        string memory _batchID,
+        address _newOwner
+    ) public {
         require(msg.sender == batches[_batchID].owner);
         string memory _oldOwner = addressToString(batches[_batchID].owner);
         batches[_batchID].owner = _newOwner;
@@ -155,7 +156,7 @@ contract SupplyChain {
             "Invalid signature"
         );
         batches[_batchID].iotData = string(
-            abi.encodePacked(batches[_batchID].iotData, " -+- ", _iotData)
+            abi.encodePacked(batches[_batchID].iotData, _iotData)
         );
         batches[_batchID].batchHistory = string(
             abi.encodePacked(
@@ -166,11 +167,9 @@ contract SupplyChain {
         );
     }
 
-    function getIoTData(string memory _batchID)
-        public
-        view
-        returns (string memory)
-    {
+    function getIoTData(
+        string memory _batchID
+    ) public view returns (string memory) {
         require(
             msg.sender == batches[_batchID].owner,
             "Only the owner can retrieve the IoT data input"
@@ -179,19 +178,15 @@ contract SupplyChain {
         return batches[_batchID].iotData;
     }
 
-    function getBatchHistory(string memory _batchID)
-        public
-        view
-        returns (string memory)
-    {
+    function getBatchHistory(
+        string memory _batchID
+    ) public view returns (string memory) {
         return batches[_batchID].batchHistory;
     }
 
-    function getBatchContents(string memory _batchID)
-        public
-        view
-        returns (string memory)
-    {
+    function getBatchContents(
+        string memory _batchID
+    ) public view returns (string memory) {
         string memory dataString = string(
             abi.encodePacked(
                 "||Owner->",
@@ -216,11 +211,9 @@ contract SupplyChain {
         return dataString;
     }
 
-    function addressToString(address _address)
-        internal
-        pure
-        returns (string memory)
-    {
+    function addressToString(
+        address _address
+    ) internal pure returns (string memory) {
         return toString(abi.encodePacked(_address));
     }
 
