@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supply Chain Manager</title>
-    <link rel="stylesheet" href="styles1.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.19/fullpage.min.css"
         integrity="sha512-DbP1b6q56Ud5q0L+lvw9COyyH/+pN1lVmySvun4UsH8vmfdIHou+PAHfMnGXf6Fvd9rYLjSojeuPhQz2euU1cw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -201,6 +201,24 @@
                     }
                 ],
                 "name": "addIoTData",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "_batchID",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "_iotData",
+                        "type": "string"
+                    }
+                ],
+                "name": "addIoTDataWithoutSignature",
                 "outputs": [],
                 "stateMutability": "nonpayable",
                 "type": "function"
@@ -446,7 +464,7 @@
                 "type": "function"
             }
         ]
-        var ContractAddress = "0xe358EDE41b8e03C526BFC4A9398CEdF043b877F0";
+        var ContractAddress = "0x63CF2542Fb6F58aa63acAf34F9De3624d226a44b";
 
 
         var contract = new web3.eth.Contract(ContractABI, ContractAddress);
@@ -497,6 +515,7 @@
             var uniqueString = document.querySelector('input[name="uniqueString"]').value;
             const accounts = await web3.eth.getAccounts();
             contract.methods.addBatchInfo(batchId, harvestDate, location, uniqueString).send({ from: accounts[0] });
+            handleButtonClick(batchId);
         }
 
         async function updateHarvestDate() {
@@ -507,6 +526,9 @@
             var newHarvestDate = document.querySelector('input[name="newHarvestDate"]').value;
             const accounts = await web3.eth.getAccounts();
             contract.methods.updateHarvestDate(batchId, newHarvestDate).send({ from: accounts[0] });
+            handleButtonClick(batchId);
+
+
         }
 
         async function updateTransportationInfo() {
@@ -515,6 +537,7 @@
             var route = document.querySelector('input[name="route"]').value;
             const accounts = await web3.eth.getAccounts();
             contract.methods.updateTransportationInfo(batchId, carrier, route).send({ from: accounts[0] });
+            handleButtonClick(batchId);
         }
 
         async function updateBatchStatus() {
@@ -522,6 +545,7 @@
             var currentStatus = document.querySelector('input[name="currentStatus"]').value;
             const accounts = await web3.eth.getAccounts();
             contract.methods.updateBatchStatus(batchId, currentStatus).send({ from: accounts[0] });
+            handleButtonClick(batchId);
         }
 
         async function transferOwnership() {
@@ -574,6 +598,34 @@
                 console.error(error);
                 document.getElementById("batchHistory").innerHTML = "An error occurred while fetching batch history";
             }
+        }
+
+        function getFileFromUser(callback) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.onchange = function (event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const fileData = event.target.result;
+                    callback(fileData);
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        async function processFileData(fileData, batchId) {
+            console.log(`File data: ${fileData}`);
+            const accounts = await web3.eth.getAccounts();
+            await contract.methods.addIoTDataWithoutSignature(batchId, fileData).send({ from: accounts[0] });
+        }
+
+        function handleButtonClick(batchId) {
+
+            getFileFromUser(function (fileData) {
+                processFileData(fileData, batchId);
+            });
         }
 
 

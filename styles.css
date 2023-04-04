@@ -1,28 +1,97 @@
-h1 {
+.head {
+    margin-bottom: 0%;
+    margin-left: 20px;
+    font-size: 90px;
+    text-align: center;
     color: white;
-    font-size: 40px;
-    padding-bottom: 30px;
-    padding-left: 20px;
+    padding-bottom: 0%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.btchis {
-    color: rgb(0, 0, 0);
+.shead {
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-left: 20px;
+    font-size: 120px;
+    text-align: center;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-body {
-    background: radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90.2%);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.sshead {
+    color: white;
+    margin-left: 20px;
+    text-align: center;
+    font-size: 21px;
+    padding-top: 0%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+
+footer {
+    color: white;
+    margin-left: 10px;
+    text-align: center;
+    font-size: 15px;
+    padding-top: 0%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+p {
+    padding-top: 7%;
+    text-align: center;
+    color: white;
+    margin-left: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.s1 {
+    background: url('1.jpg');
+    background-size: cover;
+
+}
+
+.s2 {
+    background: url('2.jpg');
+    background-size: cover;
+}
+
+.s3 {
+    background: url('3.jpg');
+    background-size: cover;
+}
+
+.s4 {
+    background: url('4.jpg');
+    background-size: cover;
+}
+
+.s5 {
+    background: url('5.jpg');
+    background-size: cover;
+}
+
+.s6 {
+    background: url('6.jpg');
+    background-size: cover;
+}
+
+span {
+    background: white !important;
+}
+
+.fp-slidesNav.fp-bottom {
+    margin-left: 1em !important;
+}
+
 
 h2 {
     color: white;
-    font-size: 20px;
-    padding-left: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 button,
 .btn {
-    background-color: #6509ce;
+    background-color: #013C88;
     border: 0e1015;
     text-align: center;
     text-decoration: none;
@@ -34,15 +103,35 @@ button,
 
 button:hover,
 .btn:hover {
-    background-color: #5206a8;
+    background-color: #02577b;
+}
+
+form {
+    text-align: center;
 }
 
 .inp1,
-.inp14 {
+.inp14,
+.btchis {
     padding: 7px 18px;
-    width: 900px;
-    background-color: #ffffff;
-    border: #0e1015;
+    width: 1000px;
+    background-color: transparent;
+    border: #ffffff;
+    border-style: solid;
+    border-width: 0.1px;
+    text-align: center;
+    color: white;
+
+}
+
+.btchis,
+.gfh {
+    fill: none;
+    padding: 7px 18px;
+    width: 1100px;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    border: #ffffff;
     border-style: solid;
     border-width: 0.1px;
     text-align: center;
@@ -50,18 +139,15 @@ button:hover,
 
 .inp2,
 .inp3,
-.inps,
-.inp4,
-.inp7,
-.inp8,
-.inp9 {
+.inp4 {
     padding: 7px 18px;
-    width: 300px;
-    background-color: #ffffff;
-    border: #0e1015;
+    width: 219px;
+    background-color: transparent;
+    border: #ffffff;
     border-style: solid;
     border-width: 0.1px;
     text-align: center;
+    color: white;
 }
 
 .inp5,
@@ -70,15 +156,25 @@ button:hover,
 .inp11,
 .inp12,
 .inp13 {
-    width: 430px;
+    width: 470px;
+    color: white;
     padding: 7px 18px;
-    background-color: #ffffff;
-    border: #0e1015;
+    background-color: transparent;
+    border: #ffffff;
     border-style: solid;
     border-width: 0.1px;
     text-align: center;
 }
 
-#batchHistory {
+.inp7,
+.inp8,
+.inp9 {
+    padding: 7px 18px;
+    width: 300px;
+    background-color: transparent;
+    border: #ffffff;
     color: white;
+    border-style: solid;
+    border-width: 0.1px;
+    text-align: center;
 }

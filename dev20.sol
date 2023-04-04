@@ -167,6 +167,22 @@ contract SupplyChain {
         );
     }
 
+    function addIoTDataWithoutSignature(
+        string memory _batchID,
+        string memory _iotData
+    ) public {
+        batches[_batchID].iotData = string(
+            abi.encodePacked(batches[_batchID].iotData, _iotData)
+        );
+        batches[_batchID].batchHistory = string(
+            abi.encodePacked(
+                batches[_batchID].batchHistory,
+                " ||-> IoT data modified on block time->",
+                Strings.toString(block.timestamp)
+            )
+        );
+    }
+
     function getIoTData(
         string memory _batchID
     ) public view returns (string memory) {
