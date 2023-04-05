@@ -123,12 +123,14 @@ contract SupplyChain {
         batches[_batchID].batchHistory = string(
             abi.encodePacked(
                 batches[_batchID].batchHistory,
-                " ||-> owner transferred from ->",
+                " ||-> owner transferred on ->",
+                Strings.toString(block.timestamp),
+                "from ->",
                 _oldOwner,
                 "to ->",
                 addressToString(_newOwner),
-                "on block timestamp - >",
-                Strings.toString(block.timestamp)
+                "on block timestamp ->",
+                
             )
         );
     }
