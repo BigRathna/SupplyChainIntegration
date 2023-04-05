@@ -177,7 +177,7 @@ contract SupplyChain {
         batches[_batchID].batchHistory = string(
             abi.encodePacked(
                 batches[_batchID].batchHistory,
-                " ||-> IoT data modified on block time->",
+                " ||-> IoT data modified on ->",
                 Strings.toString(block.timestamp)
             )
         );
